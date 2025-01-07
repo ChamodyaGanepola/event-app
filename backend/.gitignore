@@ -10,7 +10,8 @@ lerna-debug.log*
 # Node modules
 node_modules
 
-# Environment files
+# Environment filesrd /s /q .git
+
 .env
 
 # Build directories

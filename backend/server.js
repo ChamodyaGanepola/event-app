@@ -5,7 +5,15 @@ import { connectDB } from "./config/db.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import bodyParser from "body-parser";
-dotenv.config();
+import { fileURLToPath } from 'url';
+import path from 'path';
+import { dirname } from 'path';
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+console.log(__dirname); // Outputs the directory name
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;

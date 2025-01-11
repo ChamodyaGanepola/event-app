@@ -25,7 +25,7 @@ app.use(express.json());
 app.use("/api/events", eventRoutes);
 app.use("/api/users", userRoutes);
 
-// Wrap the Express app into Vercel-compatible serverless function
+// Wrap the Express app into a Vercel-compatible serverless function
 export default (req, res) => {
-  app(req, res);
+  app(req, res);  // This handles all the incoming requests
 };

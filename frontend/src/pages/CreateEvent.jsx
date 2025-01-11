@@ -58,12 +58,18 @@ const CreateEvent = () => {
       },
       location: formData.location,
       description: formData.description,
-      img: formData.img, 
+      img: formData.img,
       createdBy: formData.createdBy,
     };
 
+    const token = localStorage.getItem('authToken');
     try {
-      const response = await axios.post(`${API_BASE_URL}/events/save`, payload);
+      const response = await axios.post(`${API_BASE_URL}/events/save`, payload, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Send the token in the Authorization header
+        },
+      });
+      console.log(response);
       setMessage("Event created successfully!");
     } catch (error) {
       setMessage("Failed to create event.");

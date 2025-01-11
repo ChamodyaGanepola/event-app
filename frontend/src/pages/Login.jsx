@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import { Avatar, Button, TextField, Typography, Link } from "@mui/material";
-import LoginIcon from '@mui/icons-material/Login';
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import axios from 'axios';
-import setAuthToken from '../utils/setAuthToken';
+import { Grid, Avatar, Button, TextField, Typography, Link, Checkbox, FormControlLabel } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
+import axios from "axios";
+import setAuthToken from "../utils/setAuthToken";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,21 +12,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(`${API_BASE_URL}/users/login`, {
         email,
         password,
       });
-
       if (response.data.success) {
-        const { token, profileImg } = response.data.data;
+        const { token, profileImg, username, type, userId } = response.data.data;
 
-        // Store token in localStorage 
         localStorage.setItem("authToken", token);
         localStorage.setItem("profileImg", profileImg);
+        localStorage.setItem("username", username);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("type", type);
 
-        // Set authorization token globally using Axios
         setAuthToken(token);
         window.location.href = "/";
       }
@@ -40,53 +36,23 @@ const Login = () => {
   };
 
   return (
-    <Grid container component="main" sx={{ height: "100vh"}}>
-     
-      {/* Leftside  */}
+    <Grid
+      container
+      component="main"
+      sx={{ height: "100vh", display: "flex", flexDirection: "row" }}
+    >
+      {/* Left Section: Login Form */}
       <Grid
         item
-        xs={false}
-        sm={3} // 1/4 of the screen
+        xs={12}
+        sm={12}
+        md={9}
         sx={{
-          backgroundColor: "black",
-          color: "white",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           padding: 2,
-          height: "100vh"
-        }}
-      >
-        <Typography variant="h5">New here?</Typography>
-        <Link href="/sign-up" style={{ textDecoration: "none" }}>
-          <Button
-            variant="outlined"
-            sx={{
-              marginTop: 2,
-              borderColor: "white",
-              color: "white",
-              "&:hover": {
-                borderColor: "darkviolet",
-                color: "darkviolet",
-              }
-            }}
-          >
-            Sign Up
-          </Button>
-        </Link>
-      </Grid>
-       {/* RIght side (Login Form) */}
-      <Grid
-        item
-        xs={12}
-        sm={9} // 3/4 of the screen
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: 2
         }}
       >
         <Grid align="center" sx={{ marginBottom: 3 }}>
@@ -95,9 +61,12 @@ const Login = () => {
           </Avatar>
           <h2>Sign in</h2>
         </Grid>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           {error && (
-            <Typography color="error" sx={{ textAlign: "center", marginBottom: 2 }}>
+            <Typography
+              color="error"
+              sx={{ textAlign: "center", marginBottom: 2 }}
+            >
               {error}
             </Typography>
           )}
@@ -129,20 +98,55 @@ const Login = () => {
             sx={{
               backgroundColor: "purple",
               color: "white",
-              "&:hover": {
-                backgroundColor: "darkviolet",
-              },
+              "&:hover": { backgroundColor: "darkviolet" },
               width: "100%",
             }}
           >
             Sign In
           </Button>
-
           <Typography sx={{ marginTop: "15px", marginBottom: "15px" }}>
-            <Link href="#">Forget password?</Link>
+            <Link href="/forgot-password" underline="hover">
+              Forgot password?
+            </Link>
           </Typography>
-
         </form>
+      </Grid>
+
+      {/* Right Section: Sign-Up Form */}
+      <Grid
+        item
+        xs={12}
+        sm={12}
+        md={3}
+        sx={{
+          backgroundColor: "black",
+          color: "white",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 2,
+        }}
+      >
+        <Typography variant="h5">New here?</Typography>
+        <Link href="/sign-up" style={{ textDecoration: "none" }}>
+          <Button
+            variant="outlined"
+            size="medium"
+            sx={{
+              marginTop: 2,
+              borderColor: "white",
+              color: "white",
+              "&:hover": {
+                borderColor: "darkviolet",
+                color: "darkviolet",
+              },
+              width: "100%",
+            }}
+          >
+            Sign Up
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   );

@@ -2,11 +2,12 @@ import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
 import User from "../models/user.model.js";
+import { sendEmail } from '../config/emailUtils.js'; // Import the sendEmail function from the utils
 import { response } from 'express';
 
 export const saveUser = async (req, res, next) => {
   try {
-    // Hash the password 
+    // Hash the password
     const hash = await bcrypt.hash(req.body.password, 10);
 
     const existingUser = await User.findOne({ email: req.body.email });
@@ -16,7 +17,9 @@ export const saveUser = async (req, res, next) => {
 
     const userId = uuidv4();
 
-    // Create a new user object
+    // Check if this is the first user being created
+    const isFirstUser = (await User.countDocuments()) === 0;
+
     const userDto = new User({
       userId: userId,
       email: req.body.email,
@@ -24,7 +27,7 @@ export const saveUser = async (req, res, next) => {
       displayName: req.body.name,
       phoneNumber: req.body.phoneNumber,
       gender: req.body.gender,
-      type: "User", // Default type is User
+      type: isFirstUser ? "Admin" : "User", // First user is Admin, others are Users
       password: hash,
       savedAt: Date.now(),
       profileImg: req.body.profileImg,
@@ -34,8 +37,6 @@ export const saveUser = async (req, res, next) => {
 
     await userDto.save();
 
-
-  
     return res.status(201).json({
       success: true,
       data: {
@@ -54,12 +55,11 @@ export const saveUser = async (req, res, next) => {
   }
 };
 
+
 export const loginUser = async (req, res, next) => {
     try {
-      // Destructure email and password 
+ 
       const { email, password } = req.body;
-  
-      // Find the user in the database by email
       const user = await User.findOne({ email });
   
       if (!user) {
@@ -96,7 +96,7 @@ export const loginUser = async (req, res, next) => {
           gender: user.gender,
           type: user.type,
           profileImg: user.profileImg, 
-          token: token, // Include the JWT token
+          token: token, 
         },
       });
   
@@ -105,3 +105,62 @@ export const loginUser = async (req, res, next) => {
       return next(error);
     }
   };
+
+
+  export const forgotPassword = async (req, res, next) => {
+    try {
+      const { email } = req.body;
+  
+      // Find the user by email
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+  
+      // Generate a JWT reset token
+      const resetToken = jwt.sign(
+        { userId: user.userId },
+        process.env.JWT_SECRET,
+        { expiresIn: "15m" } // Token valid for 15 minutes
+      );
+  
+      // Generate reset link (use req.headers.origin for the base URL)
+      const resetLink = `${req.headers.origin}/reset-password/${resetToken}`;
+      console.log(`Reset link: ${resetLink}`); // Optional log
+  
+      // Send the reset link via email
+      const subject = 'Password Reset Request';
+      const text = `Click on the following link to reset your password: ${resetLink}`;
+      const html = `<p>Click on the following link to reset your password: <a href="${resetLink}">Reset Password</a></p>`;
+  
+      // Send email to the user's email address
+      await sendEmail(email, subject, text, html);
+  
+      // Respond to the client
+      res.status(200).json({ message: "Reset link sent to your email." });
+    } catch (error) {
+      console.error("Error in forgot password:", error);
+      next(error); // Pass error to the next middleware
+    }
+  };
+  
+  export const resetPassword = async (req, res, next) => {
+    try {
+      const { token, newPassword } = req.body;
+  
+      // Verify the JWT token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  
+      // Hash the new password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+  
+      // Update the user's password
+      await User.updateOne({ userId: decoded.userId }, { password: hashedPassword });
+  
+      res.status(200).json({ message: "Password updated successfully." });
+    } catch (error) {
+      console.error("Error in reset password:", error);
+      res.status(400).json({ message: "Invalid or expired token." });
+    }
+  };
+  

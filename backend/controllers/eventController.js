@@ -94,3 +94,37 @@ export const getEventById = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
+
+// Register user for an event
+export const registerUserForEvent = async (req, res) => {
+  const { eventId } = req.params;
+  const { userId } = req.body; // Assuming userId is provided in the body of the request
+
+  if (!userId) {
+    return res.status(400).json({ success: false, message: "User ID is required" });
+  }
+
+  try {
+    const event = await Event.findOne({ eventId });
+
+    if (!event) {
+      return res.status(404).json({ success: false, message: "Event not found" });
+    }
+
+    // Check if the user is already registered for the event
+    if (event.registeredUsers.includes(userId)) {
+      return res.status(400).json({ success: false, message: "User is already registered for this event" });
+    }
+
+    // Add userId to the registeredUsers array
+    event.registeredUsers.push(userId);
+
+    // Save the event with the updated registeredUsers
+    await event.save();
+
+    res.status(200).json({ success: true, message: "User successfully registered for the event" });
+  } catch (error) {
+    console.error("Error in Registering User:", error.message);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};

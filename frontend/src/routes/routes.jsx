@@ -4,6 +4,7 @@ import EventDetails from "../pages/EventDetails";
 import CreateEvent from "../pages/CreateEvent";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
+import ForgotPassword from "../pages/ForgotPassword";
 
 
 export const routes =[
@@ -12,6 +13,8 @@ export const routes =[
     {path:'/events/:eventId',  element:<EventDetails />},
     {path:'/create-event', element:<CreateEvent />},
     {path:'/login', element:<Login />},
-    {path:'/sign-up', element:<SignUp />}
+    {path:'/sign-up', element:<SignUp />},
+    {path:'/forgot-password', element:<ForgotPassword/>}
+    
 ]
 

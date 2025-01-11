@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Grid, Avatar, Button, TextField, Typography, Link, Checkbox, FormControlLabel } from "@mui/material";
+import { Grid, Avatar, Button, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
+import Link from "next/link";
 import LoginIcon from "@mui/icons-material/Login";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";

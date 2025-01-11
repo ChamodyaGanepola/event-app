@@ -1,9 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import { connectDB } from './config/db.js';  // MongoDB connection
-import eventRoutes from './routes/eventRoutes.js';  // Event routes
-import userRoutes from './routes/userRoutes.js';  // User routes
+import { connectDB } from './config/db.js';  
+import eventRoutes from './routes/eventRoutes.js';  
+import userRoutes from './routes/userRoutes.js';  
 import bodyParser from 'body-parser';
 
 dotenv.config();
@@ -19,11 +19,11 @@ app.use(cors());
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Use event and user routes
-app.use("/api/events", eventRoutes);  // Use event routes at "/api/events"
-app.use("/api/users", userRoutes);    // Use user routes at "/api/users"
+//routes
+app.use("/api/events", eventRoutes); 
+app.use("/api/users", userRoutes);    
 
-// Connect to DB and start the Express server
+
 connectDB();
 
-export default app;  // This will be your serverless handler
+export default app;  //  serverless handler

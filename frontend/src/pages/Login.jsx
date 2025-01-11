@@ -106,7 +106,7 @@ const Login = () => {
           </Button>
           <Typography sx={{ marginTop: "15px", marginBottom: "15px" }}>
             <Link href="/forgot-password" underline="hover">
-              Forgot password?
+              Forgot your password?
             </Link>
           </Typography>
         </form>

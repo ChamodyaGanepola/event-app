@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { Grid, Avatar, Button, TextField, Typography, Checkbox, FormControlLabel } from "@mui/material";
-import Link from "next/link";
+import {
+  Grid,
+  Avatar,
+  Button,
+  TextField,
+  Typography,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
@@ -19,7 +27,8 @@ const Login = () => {
         password,
       });
       if (response.data.success) {
-        const { token, profileImg, username, type, userId } = response.data.data;
+        const { token, profileImg, username, type, userId } =
+          response.data.data;
 
         localStorage.setItem("authToken", token);
         localStorage.setItem("profileImg", profileImg);
@@ -106,9 +115,7 @@ const Login = () => {
             Sign In
           </Button>
           <Typography sx={{ marginTop: "15px", marginBottom: "15px" }}>
-            <Link href="/forgot-password" underline="hover">
-              Forgot your password?
-            </Link>
+            <Link to="/forgot-password">Forgot your password?</Link>
           </Typography>
         </form>
       </Grid>
@@ -130,24 +137,24 @@ const Login = () => {
         }}
       >
         <Typography variant="h5">New here?</Typography>
-        <Link href="/sign-up" style={{ textDecoration: "none" }}>
-          <Button
-            variant="outlined"
-            size="medium"
-            sx={{
-              marginTop: 2,
-              borderColor: "white",
-              color: "white",
-              "&:hover": {
-                borderColor: "darkviolet",
-                color: "darkviolet",
-              },
-              width: "100%",
-            }}
-          >
-            Sign Up
-          </Button>
-        </Link>
+        <Button
+          variant="outlined"
+          component={Link}
+          to="/forgot-password"
+          size="medium"
+          sx={{
+            marginTop: 2,
+            borderColor: "white",
+            color: "white",
+            "&:hover": {
+              borderColor: "darkviolet",
+              color: "darkviolet",
+            },
+            width: "100%",
+          }}
+        >
+          Sign Up
+        </Button>
       </Grid>
     </Grid>
   );

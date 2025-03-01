@@ -24,7 +24,7 @@ const ContactForm = () => {
     if (!message.trim()) return setErrorMessage("Please enter your message");
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/contacts`, {
+      const response = await fetch(`${API_BASE_URL}/contacts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, phone, message }),

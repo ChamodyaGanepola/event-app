@@ -197,7 +197,7 @@ const Navbar = () => {
           <Button component={Link} to="/find-events" color="inherit">
             Find Event
           </Button>
-          <Button component={Link} to="/contact" color="inherit">
+          <Button component={Link} to="/contact-us" color="inherit">
             Contact
           </Button>
           {/* Show "Create Event" only if user is admin */}

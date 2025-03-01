@@ -5,6 +5,7 @@ import CreateEvent from "../pages/CreateEvent";
 import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
+import ContactForm from "../pages/ContactForm";
 
 
 export const routes =[
@@ -14,7 +15,8 @@ export const routes =[
     {path:'/create-event', element:<CreateEvent />},
     {path:'/login', element:<Login />},
     {path:'/sign-up', element:<SignUp />},
-    {path:'/forgot-password', element:<ForgotPassword/>}
+    {path:'/forgot-password', element:<ForgotPassword/>},
+    {path:'/contact-us', element:<ContactForm/>}
     
 ]
 

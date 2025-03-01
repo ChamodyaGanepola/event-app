@@ -4,6 +4,7 @@ import cors from 'cors';
 import { connectDB } from './config/db.js';  
 import eventRoutes from './routes/eventRoutes.js';  
 import userRoutes from './routes/userRoutes.js';  
+import contactRoutes from './routes/contactRoutes.js';  
 import bodyParser from 'body-parser';
 
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.json());
 //routes
 app.use("/api/events", eventRoutes); 
 app.use("/api/users", userRoutes);    
+app.use("/api/contacts", contactRoutes);  
 
 
 connectDB();

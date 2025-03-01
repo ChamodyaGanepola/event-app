@@ -45,7 +45,7 @@ export default function EventList() {
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "200px",
+          marginTop: "1px",
         }}
       >
         <CircularProgress />

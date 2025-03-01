@@ -43,10 +43,12 @@ const ContactForm = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 5 }}>
+    <Container maxWidth="sm">
+    
       <Box sx={{ position: "relative", textAlign: "center", mb: 3 }}>
         <img src={bg} alt="Contact" width="100%" style={{ maxHeight: 250, objectFit: "cover" }} />
       </Box>
+      
 
       <Typography variant="h4" gutterBottom align="center" color="primary">
         Contact Form

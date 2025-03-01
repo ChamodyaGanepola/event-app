@@ -140,7 +140,7 @@ const Login = () => {
         <Button
           variant="outlined"
           component={Link}
-          to="/forgot-password"
+          to="/sign-up"
           size="medium"
           sx={{
             marginTop: 2,

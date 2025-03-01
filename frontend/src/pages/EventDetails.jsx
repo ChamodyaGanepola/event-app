@@ -93,7 +93,7 @@ const EventDetails = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-          marginTop: "200px",
+          
         }}
       >
         <CircularProgress />
@@ -115,9 +115,7 @@ const EventDetails = () => {
         padding: "0",
       }}
     >
-      <Typography variant="h4" gutterBottom align="center">
-        Event Details
-      </Typography>
+     
       {event ? (
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} sm={8} md={6}>

@@ -23,6 +23,7 @@ const ResetPassword = () => {
         password,
         token,
       });
+      console.log("token",token);
       setMessage(response.data.message);
       setError("");
     } catch (err) {

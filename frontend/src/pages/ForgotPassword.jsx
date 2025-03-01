@@ -17,10 +17,11 @@ const ForgotPassword = () => {
       });
       setMessage(response.data.message);
       setError("");
-    } catch (err) {
-      setError(err.response?.data?.message || "An error occurred");
-      setMessage("");
-    }
+    }catch (err) {
+        console.error("Forgot password error:", err);
+        setError(err.response?.data?.message || "Server error F. Please try again.");
+        setMessage("");
+      }
   };
 
   return (

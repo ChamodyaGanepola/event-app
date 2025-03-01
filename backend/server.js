@@ -7,7 +7,7 @@ import userRoutes from './routes/userRoutes.js';
 import contactRoutes from './routes/contactRoutes.js';  
 import bodyParser from 'body-parser';
 
-dotenv.config();
+dotenv.config({ path: '../.env' });
 
 const app = express();
 

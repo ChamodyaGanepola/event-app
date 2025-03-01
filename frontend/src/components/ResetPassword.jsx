@@ -5,8 +5,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const ResetPassword = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const { token } = useParams(); // Extract token from URL params
@@ -14,21 +14,29 @@ const ResetPassword = () => {
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (!token) {
+      setError("Invalid or missing reset token.");
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
       setError("Passwords do not match");
       return;
     }
+
     try {
       const response = await axios.post(`${API_BASE_URL}/users/reset-password`, {
-        password,
+        newPassword,
         token,
       });
       console.log("token",token);
       setMessage(response.data.message);
       setError("");
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred");
-      setMessage("");
+  
+        console.error("Server error:", err); // Log full error
+        setError(err.response?.data?.message || "Server error. Please try again.");
+        setMessage("");
+      
     }
   };
 
@@ -80,7 +88,7 @@ const ResetPassword = () => {
             type="password"
             required
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setNewPassword(e.target.value)}
             sx={{ marginBottom: 2 }}
           />
           <TextField
@@ -89,7 +97,7 @@ const ResetPassword = () => {
             type="password"
             required
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmnewPassword(e.target.value)}
             sx={{ marginBottom: 2 }}
           />
           <Button

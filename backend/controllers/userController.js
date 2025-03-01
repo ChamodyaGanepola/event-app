@@ -110,39 +110,47 @@ export const loginUser = async (req, res, next) => {
   export const forgotPassword = async (req, res, next) => {
     try {
       const { email } = req.body;
+      console.log("Forgot Password Request Received for:", email); // Debugging
+  
+      // Check if email is provided
+      if (!email) {
+        console.error("Email is required");
+        return res.status(400).json({ message: "Email is required" });
+      }
   
       // Find the user by email
       const user = await User.findOne({ email });
       if (!user) {
+        console.error("User not found for email:", email);
         return res.status(404).json({ message: "User not found" });
       }
-  
+      console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debug JWT secret
       // Generate a JWT reset token
       const resetToken = jwt.sign(
         { userId: user.userId },
         process.env.JWT_SECRET,
-        { expiresIn: "15m" } // Token valid for 15 minutes
+        { expiresIn: "15m" }
       );
   
-      // Generate reset link (use req.headers.origin for the base URL)
+      // Generate reset link
       const resetLink = `${req.headers.origin}/reset-password/${resetToken}`;
-      console.log(`Reset link: ${resetLink}`); // Optional log
+      console.log("Generated Reset Link:", resetLink); // Debugging
   
-      // Send the reset link via email
-      const subject = 'Password Reset Request';
+      // Send email
+      const subject = "Password Reset Request";
       const text = `Click on the following link to reset your password: ${resetLink}`;
       const html = `<p>Click on the following link to reset your password: <a href="${resetLink}">Reset Password</a></p>`;
   
-      // Send email to the user's email address
       await sendEmail(email, subject, text, html);
+      console.log("Reset email sent successfully");
   
-      // Respond to the client
       res.status(200).json({ message: "Reset link sent to your email." });
     } catch (error) {
       console.error("Error in forgot password:", error);
-      next(error); // Pass error to the next middleware
+      res.status(500).json({ message: "Internal Server Error" });
     }
   };
+  
   
   export const resetPassword = async (req, res, next) => {
     try {

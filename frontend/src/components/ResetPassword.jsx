@@ -97,7 +97,7 @@ const ResetPassword = () => {
             type="password"
             required
             value={confirmPassword}
-            onChange={(e) => setConfirmnewPassword(e.target.value)}
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
             sx={{ marginBottom: 2 }}
           />
           <Button

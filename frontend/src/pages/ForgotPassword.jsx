@@ -19,7 +19,7 @@ const ForgotPassword = () => {
       setError("");
     }catch (err) {
         console.error("Forgot password error:", err);
-        setError(err.response?.data?.message || "Server error F. Please try again.");
+        setError(err.response?.data?.message || "Server error. Please try again.");
         setMessage("");
       }
   };

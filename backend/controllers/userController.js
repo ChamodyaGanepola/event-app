@@ -124,7 +124,7 @@ export const loginUser = async (req, res, next) => {
         console.error("User not found for email:", email);
         return res.status(404).json({ message: "User not found" });
       }
-      console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debug JWT secret
+      
       // Generate a JWT reset token
       const resetToken = jwt.sign(
         { userId: user.userId },

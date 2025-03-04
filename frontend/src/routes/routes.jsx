@@ -6,6 +6,7 @@ import SignUp from "../pages/SignUp";
 import Login from "../pages/Login";
 import ForgotPassword from "../pages/ForgotPassword";
 import ContactForm from "../pages/ContactForm";
+import ResetPassword from "../components/resetPassword";
 
 
 export const routes =[
@@ -16,6 +17,7 @@ export const routes =[
     {path:'/login', element:<Login />},
     {path:'/sign-up', element:<SignUp />},
     {path:'/forgot-password', element:<ForgotPassword/>},
+    {path:'/reset-password/:token" ', element:<ResetPassword/>},
     {path:'/contact-us', element:<ContactForm/>}
     
 ]

@@ -3,7 +3,7 @@ import { Avatar, Button, TextField, Typography, Grid } from "@mui/material";
 import LockResetIcon from "@mui/icons-material/LockReset";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import { useEffect } from "react";
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -11,7 +11,12 @@ const ResetPassword = () => {
   const [error, setError] = useState("");
   const { token } = useParams(); // Extract token from URL params
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+ 
 
+  useEffect(() => {
+    console.log("Extracted token from URL:", token);
+  }, [token]);
+  
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (!token) {
@@ -87,7 +92,7 @@ const ResetPassword = () => {
             label="New Password"
             type="password"
             required
-            value={password}
+            value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             sx={{ marginBottom: 2 }}
           />
@@ -96,7 +101,7 @@ const ResetPassword = () => {
             label="Confirm Password"
             type="password"
             required
-            value={confirmPassword}
+            value={confirmNewPassword}
             onChange={(e) => setConfirmNewPassword(e.target.value)}
             sx={{ marginBottom: 2 }}
           />

@@ -137,7 +137,7 @@ export const loginUser = async (req, res, next) => {
       // Generate reset link
       const frontendURL = process.env.FRONT_END_URL;
       console.log("frontendURL", process.env.FRONT_END_URL); 
-      const resetLink = `${frontendURL}/reset-password/${resetToken}`;
+      const resetLink = `${frontendURL}/users/reset-password/${resetToken}`;
 
       console.log("Generated Reset Link:", resetLink); // Debugging
   

@@ -5,6 +5,7 @@ import User from "../models/user.model.js";
 import { sendEmail } from '../config/emailUtils.js'; // Import the sendEmail function from the utils
 import { response } from 'express';
 
+dotenv.config({ path: '../../.env' });
 export const saveUser = async (req, res, next) => {
   try {
     // Hash the password
@@ -133,7 +134,9 @@ export const loginUser = async (req, res, next) => {
       );
   
       // Generate reset link
-      const resetLink = `${req.headers.origin}/reset-password/${resetToken}`;
+      const frontendURL = process.env.VITE_API_BASE_URL || "http://127.0.0.1:5173"; 
+      const resetLink = `${frontendURL}/reset-password/${resetToken}`;
+
       console.log("Generated Reset Link:", resetLink); // Debugging
   
       // Send email

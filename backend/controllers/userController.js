@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import User from "../models/user.model.js";
 import { sendEmail } from '../config/emailUtils.js'; // Import the sendEmail function from the utils
 import { response } from 'express';
-
+import dotenv from 'dotenv';
 dotenv.config({ path: '../../.env' });
 export const saveUser = async (req, res, next) => {
   try {

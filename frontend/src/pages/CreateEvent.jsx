@@ -79,7 +79,7 @@ const CreateEvent = () => {
         },
       });
       console.log(response);
-      setMessage("Event created successfully!");
+      
       setFormData({
         title: "",
         date: { year: "", month: "", Date: "" },
@@ -88,6 +88,10 @@ const CreateEvent = () => {
         img: "",
         createdBy: "",
       });
+      setMessage("Event created successfully!");
+      setTimeout(() => {
+        setMessage("");
+      }, 60000);
 
     } catch (error) {
       setMessage("Failed to create event.");

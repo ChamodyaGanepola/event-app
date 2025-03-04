@@ -33,6 +33,7 @@ const ResetPassword = () => {
         newPassword,
         token,
       });
+      console.log("Token from URL:", token);
       console.log("token",token);
       setMessage(response.data.message);
       setError("");

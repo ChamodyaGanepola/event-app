@@ -38,6 +38,15 @@ const CreateEvent = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      // Set max size to 2MB (2 * 1024 * 1024 bytes)
+      const maxSize = 2 * 1024 * 1024;
+  
+      if (file.size > maxSize) {
+        console.error("File size exceeds 2MB. Please upload a smaller image.");
+        alert("File size exceeds 2MB. Please upload a smaller image.");
+        return;
+      }
+  
       const reader = new FileReader();
       reader.onloadend = () => {
         setFormData((prev) => ({ ...prev, img: reader.result })); // Base64 string
@@ -45,7 +54,7 @@ const CreateEvent = () => {
       reader.readAsDataURL(file);
     }
   };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -71,6 +80,15 @@ const CreateEvent = () => {
       });
       console.log(response);
       setMessage("Event created successfully!");
+      setFormData({
+        title: "",
+        date: { year: "", month: "", Date: "" },
+        location: "",
+        description: "",
+        img: "",
+        createdBy: "",
+      });
+
     } catch (error) {
       setMessage("Failed to create event.");
     }

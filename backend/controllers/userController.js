@@ -134,7 +134,8 @@ export const loginUser = async (req, res, next) => {
       );
   
       // Generate reset link
-      const frontendURL = process.env.VITE_API_BASE_URL || "http://127.0.0.1:5173"; 
+      const frontendURL = process.env.VITE_API_BASE_URL;
+      console.log("frontendURL", process.env.VITE_API_BASE_URL); 
       const resetLink = `${frontendURL}/reset-password/${resetToken}`;
 
       console.log("Generated Reset Link:", resetLink); // Debugging

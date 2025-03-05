@@ -29,10 +29,10 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/users/reset-password`, {
+      const response = await axios.post(`${API_BASE_URL}/users/reset-password/${token}`, {
         newPassword,
-        token,
       });
+      
       console.log("Token from URL:", token);
       console.log("token",token);
       setMessage(response.data.message);

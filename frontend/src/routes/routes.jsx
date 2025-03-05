@@ -17,7 +17,7 @@ export const routes =[
     {path:'/login', element:<Login />},
     {path:'/sign-up', element:<SignUp />},
     {path:'/forgot-password', element:<ForgotPassword/>},
-    {path:'/reset-password/:token" ', element:<ResetPassword/>},
+    {path:'/reset-password/:token', element:<ResetPassword/>},
     {path:'/contact-us', element:<ContactForm/>}
     
 ]

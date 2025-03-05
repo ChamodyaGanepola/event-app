@@ -133,7 +133,7 @@ export const forgotPassword = async (req, res, next) => {
     const hashedToken = await bcrypt.hash(resetToken, 10); // Hash token before saving
 
     user.resetToken = hashedToken;
-    user.resetTokenExpiry = Date.now() + 15 * 60 * 1000; // Token valid for 15 min
+    user.resetTokenExpiry = new Date(Date.now() + 15 * 60 * 1000); // Set expiry as Date object
     await user.save();
 
     const frontendURL = process.env.FRONT_END_URL;
@@ -168,12 +168,12 @@ export const resetPassword = async (req, res, next) => {
     // Find user with matching resetToken
     const user = await User.findOne({ resetToken: token });
 
-    if (!user || !user.resetTokenExpiry || user.resetTokenExpiry < Date.now()) {
+    if (!user || !user.resetTokenExpiry || new Date(user.resetTokenExpiry) < new Date()) {
       return res.status(400).json({ message: "Invalid or expired token." });
     }
 
     // Compare provided token with hashed token in DB
-    const isValid = await bcrypt.compare(token, user.resetToken);
+    const isValid = bcrypt.compare(token, user.resetToken);
     if (!isValid) return res.status(400).json({ message: "Invalid token." });
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);

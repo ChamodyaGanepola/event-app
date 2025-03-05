@@ -14,6 +14,8 @@ const userSchema = new mongoose.Schema(
     isActive: { type: Boolean, default: true },
     profileImg: { type: String, required: true },
     isDeactived: { type: Boolean, default: false },
+    resetToken: { type: String }, 
+    resetTokenExpiry: { type: Date }, 
   },
   { collection: "userData" }
 );
